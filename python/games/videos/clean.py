@@ -1,6 +1,7 @@
 import pygame 
-from utils.bases import Screen, Personnage, colision, Weapons_list, HeathBare
+from utils.bases import Screen, Personnage, colision, Weapons_list, HeathBare, Alien_list
 from utils.elements import enemies
+from utils.menu import menu, menu_weapon
 # from utils.advanced import Weapons
 
 
@@ -12,11 +13,25 @@ screen = Screen_class.screen
 text_size = 30
 myfont = pygame.font.Font(None, text_size) 
 
+### Menu 
+
+# 1) menu perso
+
+perso = menu(screen, [Personnage(name) for name in Alien_list.keys()])
+# print(perso)
+
+# 2) menu weapons
+
+weapon_model = menu_weapon(screen, [Weapons_list[model] for model in Weapons_list.keys()])
+
+
+######
+
 
 
 # Players ex:(galas0)
 # CHOOSE
-Player_class = Personnage("galas0")
+Player_class = Personnage(perso)
 player = Player_class.small_image
 #
 # ##
@@ -25,8 +40,8 @@ player = Player_class.small_image
 e0 = enemies["vilan"]
 e1 = enemies["kratos"]
 # accesoires  (ie: standard, war)
-name = "war"
-w0 = Weapons_list[name]
+
+w0 = Weapons_list[weapon_model]
 kratos_h = HeathBare(e1)
 # Weapons(20, 200, 30, 20, 20, 50, "029-vortex.png","029-vortex.png")
 shoot = w0.shoot
@@ -54,7 +69,7 @@ def show_HeathBare(x, y, level=0):
         level = 0
         color = (200, 0, 0)
 
-    pygame.draw.rect(screen, color, (x, y, level, 10))
+    pygame.draw.rect(screen, color, (x, y, level//5, 10))
     # screen.blit(screen, vie)
 
 
@@ -80,12 +95,13 @@ while running:
                 shooted = False
                 missile_drop = False
                 dropped = False
-            
+                
+          
             if event.key == pygame.K_p:
                 missile_drop = True
                 shooted = False
                 bullet = False
-            
+        
             if event.key == pygame.K_n:
                 in_live = True
             
@@ -94,9 +110,9 @@ while running:
                 # print("key 2 pressed")
             if event.key == pygame.K_b:
                 print("boost")
-                boost = True
-                stock_value -= 2
-            
+                if stock_value >= 2:
+                    boost = True
+                    stock_value -= 2
 
    
     # Actions
@@ -106,8 +122,6 @@ while running:
     e0.moving()
 
    
-
-
     if boost:
         if (Player_class.speed_up > 0 and stock_value >= 0):
             Player_class.speed_up = Player_class.speed_up + 1
@@ -126,10 +140,10 @@ while running:
     if dropped:
         if ((w0.bx > 0)and(w0.bx < 500)):
             if ((w0.by < 400) and (w0.by > 0)):
-                if name == "war":
+                if weapon_model == "war":
                     w0.by = w0.by - w0.missile_speed
                 else:
-                    w0.bx = w0.bx + w0.missile_speed//4
+                    # w0.bx = w0.bx + w0.missile_speed//4
                     w0.by = w0.by + w0.missile_speed 
 
                 bullet = False
@@ -139,6 +153,7 @@ while running:
 
     if kratos:
         e1.moving()
+        show_HeathBare(200, 650, level=e1.defense)
         # screen.blit(screen, kratos_h.disp_jauge())
         if colision(Player_class, e1):
             Player_class.defense = Player_class.defense - e1.attack
@@ -165,7 +180,8 @@ while running:
         bullet = False
         in_live = False
         dropped = False
-        missile = False
+        missile_drop = False
+        e0.x = 1000
         score_value += 100
     
     if colision(w0, e1, bullet_mode=True):
@@ -174,6 +190,7 @@ while running:
         dropped = False
         if e1.defense < 0:
             kratos = False
+            e1.x = 1000
             e1.defense = 1000
             score_value += 5000
         else:
@@ -182,7 +199,8 @@ while running:
     # Standard Display
     show_score(10,600)
     show_stock(10,640)
-    show_HeathBare(400, 600, level=Player_class.defense)
+    show_HeathBare(200, 600, level=Player_class.defense)
+    
 
     # blit on screen
     screen.blit(player, (Player_class.x, Player_class.y))

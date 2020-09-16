@@ -38,6 +38,6 @@ class Element:
 
 
 enemies = {"vilan":Element('python/games/img/png/002-alien.png', 7, 5, 5, 5, 10, 50),
-          "kratos":Element('python/games/img/png/025-alien.png', 10, 15, 10, 10, 150, 500, x=150, y=300)}
+          "kratos":Element('python/games/img/png/025-alien.png', 10, 15, 10, 10, 150,500, x=1, y=1)}
 
         

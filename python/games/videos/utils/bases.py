@@ -22,7 +22,8 @@ class Alien:
 
 
 Alien_list = {"galas0":Alien("galas0", 10, 8, 11, 9, 30, 120, "017-ufo.png", "029-vortex.png"),
-              "gorgon":Alien("gorgon", 12, 12, 8, 7, 56, 200, "026-alien.png", "029-vortex.png")}
+              "gorgon":Alien("gorgon", 12, 12, 8, 7, 56, 200, "026-alien.png", "029-vortex.png"),
+              "freeze":Alien("freeze",10, 10, 10, 10, 50, 1000, "028-alien.png", "008-ufo.png")}
     
 
 ############### END ################
@@ -31,8 +32,9 @@ Alien_list = {"galas0":Alien("galas0", 10, 8, 11, 9, 30, 120, "017-ufo.png", "02
 
 
 class Weapons:
-    def __init__(self, attack, defense, bullet_speed, missile_speed, 
+    def __init__(self, name, attack, defense, bullet_speed, missile_speed, 
     bullet_degat, missile_degat, bullet_image:str, missile_image:str):
+        self.name = name
         self.dimension = (500,500)
         self.tire_position = (0,0)
         self.py = pygame
@@ -76,8 +78,9 @@ class Weapons:
 
 
 
-Weapons_list = {"standard":Weapons(30, 40, 20, 10, 30, 60, "029-vortex.png", "007-capsule.png"), 
-"war":Weapons(60, 40, 20, 20, 30, 90, "029-vortex.png", "missile.png")}
+Weapons_list = {"standard":Weapons("standard", 30, 40, 20, 10, 30, 60, "029-vortex.png", "007-capsule.png"), 
+"war":Weapons("war", 60, 40, 20, 20, 30, 90, "029-vortex.png", "missile.png"),
+"mars":Weapons("mars", 10, 100, 29, 20, 20, 300, "008-ufo.png", "torpille.png")}
 
 
 ############# END ##################
@@ -182,7 +185,7 @@ def colision(obj1, obj2, bullet_mode=False):
 class HeathBare:
     def __init__(self, owner):
         self.vie = owner.defense
-        self.base = pygame.Rect(250, 5, 100, 30)
+        self.base = pygame.Rect(250, 5, 0, 30)
     
     def disp_jauge(self):
         return self.base
