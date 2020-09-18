@@ -4,8 +4,8 @@ pygame.init()
 
 text_size = 30
 myfont = pygame.font.Font(None, text_size) 
-perso_dict = {0:"galas0", 1:"gorgon", 2:"freeze"}
-weapon_dict = {0: "standard", 1:"war", 2:"mars"}
+perso_dict = {0:"galas0", 1:"gorgon", 2:"freeze", 3:"theodore",4:"BlueBeam"}
+weapon_dict = {0: "standard", 1:"war", 2:"mars", 3:"techno", 4:"freezer"}
 
 
 def menu(screen, list_to_disp, menu_condition=True):
@@ -17,9 +17,29 @@ def menu(screen, list_to_disp, menu_condition=True):
                 sys.exit()
             
             if event.type == pygame.KEYDOWN:
-                for event.key in range(len(list_to_disp)):
-                    perso = perso_dict[event.key]
-                    print(str(event.key))
+
+                if event.key == pygame.K_0:
+                    perso = perso_dict[0]
+                    menu_condition = False
+                    return perso
+
+                if event.key == pygame.K_1:
+                    perso = perso_dict[1]
+                    menu_condition = False
+                    return perso
+
+                if event.key == pygame.K_2:
+                    perso = perso_dict[2]
+                    menu_condition = False
+                    return perso
+                    
+                if event.key == pygame.K_3:
+                    perso = perso_dict[3]
+                    menu_condition = False
+                    return perso
+
+                if event.key == pygame.K_4:
+                    perso = perso_dict[4]
                     menu_condition = False
                     return perso
 
@@ -47,11 +67,34 @@ def menu_weapon(screen, list_to_disp, w_menu_condiction=True):
                 sys.exit()
             
             if event.type == pygame.KEYDOWN:
-                for event.key in range(len(list_to_disp)):
-                    weapon_model = weapon_dict[event.key]
-                    print(str(event.key))
-                    w_menu_condiction = False
-                    return weapon_model
+
+                if event.key == pygame.K_0:
+                        perso = weapon_dict[0]
+                        menu_condition = False
+                        return perso
+                    
+                if event.key == pygame.K_1:
+                        perso = weapon_dict[1]
+                        menu_condition = False
+                        return perso
+                    
+                if event.key == pygame.K_2:
+                        perso = weapon_dict[2]
+                        menu_condition = False
+                        return perso
+                
+                if event.key == pygame.K_3:
+                        perso = weapon_dict[3]
+                        menu_condition = False
+                        return perso
+                
+                if event.key == pygame.K_4:
+                        perso = weapon_dict[4]
+                        menu_condition = False
+                        return perso
+                
+                
+
 
                 
         screen.fill((0,0,0))

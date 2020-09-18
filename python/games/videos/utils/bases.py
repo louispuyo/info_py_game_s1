@@ -23,7 +23,9 @@ class Alien:
 
 Alien_list = {"galas0":Alien("galas0", 10, 8, 11, 9, 30, 120, "017-ufo.png", "029-vortex.png"),
               "gorgon":Alien("gorgon", 12, 12, 8, 7, 56, 200, "026-alien.png", "029-vortex.png"),
-              "freeze":Alien("freeze",10, 10, 10, 10, 50, 1000, "028-alien.png", "008-ufo.png")}
+              "freeze":Alien("freeze",10, 10, 10, 10, 50, 1000, "028-alien.png", "008-ufo.png"),
+              "theodore":Alien("theodore", 12, 8, 10, 12, 5, 400, "028-robot-2.png", "034-graphene.png"),
+              "BlueBeam":Alien("BlueBeam", 15, 30,5, 5,90, 700,"049-jetpack.png", "049-jetpack.png")}
     
 
 ############### END ################
@@ -80,9 +82,9 @@ class Weapons:
 
 Weapons_list = {"standard":Weapons("standard", 30, 40, 20, 10, 30, 60, "029-vortex.png", "007-capsule.png"), 
 "war":Weapons("war", 60, 40, 20, 20, 30, 90, "029-vortex.png", "missile.png"),
-"mars":Weapons("mars", 10, 100, 29, 20, 20, 300, "008-ufo.png", "torpille.png")}
-
-
+"mars":Weapons("mars", 10, 100, 29, 20, 20, 300, "008-ufo.png", "torpille.png",), 
+"techno":Weapons("techno", 40, 23, 70, 50, 10, 30, "034-graphene.png", "014-rocket.png"),
+"freezer":Weapons("freezer", 70, 70, 30, 20, 80, 500, "007-renewable-energy.png", "031-city.png")}
 ############# END ##################
 
 

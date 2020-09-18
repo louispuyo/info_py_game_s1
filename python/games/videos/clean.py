@@ -18,7 +18,7 @@ myfont = pygame.font.Font(None, text_size)
 # 1) menu perso
 
 perso = menu(screen, [Personnage(name) for name in Alien_list.keys()])
-# print(perso)
+print(perso)
 
 # 2) menu weapons
 
@@ -50,7 +50,9 @@ shoot
 
 # independant functions
 def show_score(x, y):
-    # score = myfont.render("score: "+str(score_value), True,(0, 0, 0))
+    # score = myfont.`
+    # 
+    # render("score: "+str(score_value), True,(0, 0, 0))
     score = myfont.render("score: "+str(score_value), True,(255, 255, 255))
     screen.blit(score, (x, y))
 
