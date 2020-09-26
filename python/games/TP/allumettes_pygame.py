@@ -1,10 +1,13 @@
 import pygame
+import random 
 
 pygame.init()
 
 first = True
 TEXT_SIZE = 30
-font = pygame.font.SysFont(None, TEXT_SIZE)
+TITLE_SIZE = 50
+font = pygame.font.SysFont('dejavusans', TEXT_SIZE)
+Title = pygame.font.SysFont('dejavusans', TITLE_SIZE)
 BACKGROUND = (0,0,0)
 WHITE = (255,255,255)
 RED = (255, 0, 0)
@@ -30,6 +33,7 @@ class Game:
       self.black_list = []
       self.is_running = True
       self.space = False
+      self.bg_alum = True
       # self.button_pass = pygame.draw.rect(screen, WHITE, (400, 400, 90, 90))
 
 
@@ -40,6 +44,12 @@ class Player:
       self.max_pioche = 3
 
 
+class mini_allumettes:
+   def __init__(self, x, y):
+      self.x = random.randint(1, 400)
+      self.y = random.randint(1, 400)
+      self.rect = pygame.draw.rect(screen,(255,255,255),(x,y,5,40))
+      self.bou = pygame.draw.rect(screen,(255,0,0),(x,y-5,5,5))
 
 
 
@@ -160,6 +170,9 @@ def display_text(message, color=WHITE, posx=190, posy=400):
    surface = font.render(message, False, color)
    screen.blit(surface, (posx, posy))
 
+def display_title(title, color=WHITE, posx=190, posy=400):
+   surface = Title.render(title, False, color)
+   screen.blit(surface, (posx, posy))
 
 
 def GamePresentation():
@@ -182,14 +195,18 @@ def GamePresentation():
 
 
       if not game.space:
-         display_text("ALLUMETTES GAME 667", color=WHITE)
-         model = allumettes(190, 200, "")
+         display_title("ALLUMETTES GAME 667", color=(20, 210, 30))
+         if game.bg_alum:
+            mini_allumettes(random.randint(1,700), 100)
+            mini_allumettes(random.randint(1,700), 550)
+
+
+
+
+
          display_text("commands : -> pour prendre finir le tour", color=WHITE, posx=100, posy=460)
-         display_text("choisir entre 1 et 3 allumettes celui qui tire la derniere a perdu", color=WHITE, posx=30, posy=480)
+         display_text("but du jeu : choisir entre 1 et 3 allumettes celui qui tire la derniere a perdu", color=WHITE, posx=30, posy=480)
 
-
-         model.rect
-         model.bou
 
       # display_text("ALLUMETTES GAME 667", color=BACKGROUND)
          pygame.display.update()
