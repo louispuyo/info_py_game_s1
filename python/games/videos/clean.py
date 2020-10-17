@@ -2,6 +2,7 @@ import pygame
 from utils.bases import Screen, Personnage, colision, Weapons_list, HeathBare, Alien_list
 from utils.elements import enemies
 from utils.menu import menu, menu_weapon
+# from utils.advanced import Personnage_X
 # from utils.advanced import Weapons
 
 
@@ -24,15 +25,15 @@ print(perso)
 
 weapon_model = menu_weapon(screen, [Weapons_list[model] for model in Weapons_list.keys()])
 
-
 ######
-
-
 
 # Players ex:(galas0)
 # CHOOSE
 Player_class = Personnage(perso)
 player = Player_class.small_image
+
+# perso 2
+# player2_class = Personnage_X()
 #
 # ##
 
@@ -74,6 +75,13 @@ def show_HeathBare(x, y, level=0):
     pygame.draw.rect(screen, color, (x, y, level//5, 10))
     # screen.blit(screen, vie)
 
+
+def change_map(Screen_class, max_right=500):
+    if Player_class.x > max_right or Screen_class.map2:
+        Screen_class.map2 = True
+        Screen_class = Screen(background="/Users/snowden/Documents/COURS_L1S1/option_info/python/games/img/bg/bg2.jpg")
+        Screen_class.dimension = (1300, 500)
+        pygame.display.update()
 
 # MAIN
 boost = False
@@ -122,6 +130,7 @@ while running:
     Screen_class.set_bg()
     Player_class.move()
     e0.moving()
+    change_map(Screen_class)
 
    
     if boost:

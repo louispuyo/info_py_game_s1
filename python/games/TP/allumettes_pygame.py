@@ -1,5 +1,6 @@
 import pygame
-import random 
+# import random 
+# import test_entree as inzone
 
 pygame.init()
 
@@ -17,7 +18,7 @@ end_2 = False
 running = True
 compteur = 0
 screen = pygame.display.set_mode((700, 700))
-nombre_alumettes = 4
+nombre_alumettes = int(input("nombre d allumette ? ")) 
 acc = []
 black_list = []
 
@@ -34,6 +35,7 @@ class Game:
       self.is_running = True
       self.space = False
       self.bg_alum = True
+      self.is_replayed = False
       # self.button_pass = pygame.draw.rect(screen, WHITE, (400, 400, 90, 90))
 
 
@@ -44,12 +46,12 @@ class Player:
       self.max_pioche = 3
 
 
-class mini_allumettes:
-   def __init__(self, x, y):
-      self.x = random.randint(1, 400)
-      self.y = random.randint(1, 400)
-      self.rect = pygame.draw.rect(screen,(255,255,255),(x,y,5,40))
-      self.bou = pygame.draw.rect(screen,(255,0,0),(x,y-5,5,5))
+# class mini_allumettes:
+#    def __init__(self, x, y):
+#       self.x = random.randint(1, 400)
+#       self.y = random.randint(1, 400)
+#       self.rect = pygame.draw.rect(screen,(255,255,255),(x,y,5,40))
+#       self.bou = pygame.draw.rect(screen,(255,0,0),(x,y-5,5,5))
 
 
 
@@ -67,14 +69,11 @@ class allumettes(object):
 
 
 
-
-
 def display(List):
    for el in List:
       el.rect
       el.bou
       
-
 
 def id_pointer(name):
    try:
@@ -86,8 +85,6 @@ def id_pointer(name):
       nb = int(name[-1])
       # print(nb)
       return {"nb":nb}
-
-   
 
 
 def click_handler(obj_list, joueur, joueur2):
@@ -135,6 +132,10 @@ def click_handler(obj_list, joueur, joueur2):
       #    print("click!")
             
             
+def display_text(message, color=WHITE, posx=190, posy=400):
+   surface = font.render(message, False, color)
+   screen.blit(surface, (posx, posy))
+
 
 def nombre_de_pioche(joueur, joueur2):
    # display_text(joueur.name+" is playing", color=BACKGROUND)
@@ -149,12 +150,16 @@ def nombre_de_pioche(joueur, joueur2):
       # display_text(joueur.name+" is playing")
 
    elif (game.nb_allumettes)==0:
-      print(f"GAME OVER for {joueur.name} !")
-      game.is_running = False
+      # print(f"GAME OVER for {joueur.name} !")
+      screen.fill(BACKGROUND)
+      display_text(f"GAME OVER for {joueur.name} !")
+      game.space = False
+      # replay()
       
+
    else:
       pass
-
+      
 
 
 def generator(nb_allumettes, base_x, base_y):
@@ -165,19 +170,13 @@ def generator(nb_allumettes, base_x, base_y):
    return acc
 
 
-
-def display_text(message, color=WHITE, posx=190, posy=400):
-   surface = font.render(message, False, color)
-   screen.blit(surface, (posx, posy))
-
 def display_title(title, color=WHITE, posx=190, posy=400):
    surface = Title.render(title, False, color)
    screen.blit(surface, (posx, posy))
 
 
 def GamePresentation():
-   # screen.fill(BACKGROUND)
- 
+   # screen.fill(BACKGROUND)   
    game.space = False
 
    while not game.space:
@@ -186,19 +185,53 @@ def GamePresentation():
             game.space = True
             game.is_running = False
 
+
          elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                player1 = Player("freeze")
+                player2 = Player("william")
+               #  input_box1 = inzone.InputBox(100, 100, 140, 32, player1, label="joueur1")
+               #  input_box2 = inzone.InputBox(100, 300, 140, 32, player2, label="joueur2")
+                saisie = True
+                if saisie:
+                 
+                  input_box1.handle_event(event)
+                  input_box2.handle_event(event)
+                  
+                  input_box1.update()
+                  input_box2.update()
+                  input_box1.draw(screen)
+                  input_box2.draw(screen)
+                  player1.name = input_box1.text
+                  player2.name = input_box2.text
+                  
+
+                  if event.key == pygame.K_e:
+                     saisie = False
+                
+                     player1.name = input_box1.text
+                     player2.name = input_box2.text
+                     # loop(player2)
+
             if event.key == pygame.K_SPACE:
                game.space = True
                game.is_running = True
+
+               player1 = Player("joueur1")
+               player2 = Player("joueur2")
                screen.fill(BACKGROUND)
+               # 
+               #loop(player1, player2)
                
 
+   
 
       if not game.space:
-         display_title("ALLUMETTES GAME 667", color=(20, 210, 30))
-         if game.bg_alum:
-            mini_allumettes(random.randint(1,700), 100)
-            mini_allumettes(random.randint(1,700), 550)
+         display_title("ALLUMETTES GAME", color=(20, 210, 30))
+
+         # if game.bg_alum:
+         #    mini_allumettes(random.randint(1,700), 100)
+         #    mini_allumettes(random.randint(1,700), 550)
 
 
 
@@ -211,6 +244,28 @@ def GamePresentation():
       # display_text("ALLUMETTES GAME 667", color=BACKGROUND)
          pygame.display.update()
    
+
+def replay():
+   while not game.is_running:
+      display_text("Do you want to replay ?", posx=300, posy=300)
+      for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+               # game.space = True
+               game.is_running = False
+               game.is_replayed = True
+            
+
+            elif event.type == pygame.KEYDOWN:
+               if event.key == pygame.K_SPACE:
+                  game.space = False
+                  game.is_running = True
+                  screen.fill(BACKGROUND)
+                  game.is_replayed = True
+                  break
+
+      pygame.display.update()
+
+
 
 
 
@@ -238,14 +293,14 @@ player2 = Player("william")
 game = Game(nombre_alumettes,[player1, player2])
 GamePresentation()
 
-
 # OBJECTS
+
+if game.is_replayed:
+   generator(game.nb_allumettes, 50, 50)
 
 generator(game.nb_allumettes, 50, 50)
 
-
-
-while game.is_running:
+while game.is_running or game.is_replayed:
    for event in pygame.event.get():
       if event.type == pygame.QUIT:
          game.is_running = False
@@ -330,5 +385,6 @@ while game.is_running:
 
 
       pygame.display.update()
+
 
 

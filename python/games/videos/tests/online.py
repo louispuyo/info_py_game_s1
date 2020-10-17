@@ -110,7 +110,7 @@ class Person(object):
         return rot_image,rot_rect
 
 game = Game()
-P1 = Person("p1", 200, 200, 100, BANK.SP_test())
+P1 = Person("p1", 200, 200, 10, BANK.SP_test())
 
 
 while game.running:
@@ -130,14 +130,16 @@ while game.running:
                     print("right")
                     P1.right_1 = False
                     P1.right_2 = True
-                    screen.blit(P1.right_img_1, (200, 200))
+                    screen.blit(P1.right_img_1, (P1.pos_x, P1.pos_y))
+                    pygame.display.update()
                 # refresh()
                 elif P1.right_2:
                     screen.blit(BACKGROUND, (0,0))
 
                     print("right2")
-                    screen.blit(P1.right_img_2, (200, 200))
-         
+                    P1.pos_x = P1.pos_x + 20
+                    screen.blit(P1.right_img_2, (P1.pos_x, P1.pos_y))
+                    
                 
                 # P1_1.perso
                 # P1_2.perso
@@ -147,22 +149,32 @@ while game.running:
                 
                 P1.base = False
                 P1.right_1 = True
-        
+
+            elif event.key == pygame.K_DOWN:
+                if P1.base:
+                    print("down")
+                    P1.pos_z = P1.pos_z - 3
+                P1.base = True
+                screen.blit(BACKGROUND, (0,0))
+                P1.base_img = pygame.transform.scale(P1.base_img,(80-P1.pos_z, 80-P1.pos_z))
+
             elif event.key == pygame.K_UP:
                 if P1.base:
                     print("up")
-                P1.base = True
+                    P1.pos_z = P1.pos_z + 3
+                # P1.base = True
                 screen.blit(BACKGROUND, (0,0))
+                P1.base_img = pygame.transform.scale(P1.base_img,(80-P1.pos_z, 80-P1.pos_z))
                 # if game.base:
                 #     screen.blit(P1.base_img, (200, 200))
 
                 
     if P1.base:
-        screen.blit(P1.base_img, (200, 200))
 
-    # screen.blit(BACKGROUND, (1200,700)) 
-    screen.blit(P1.right_img_1, (500, 500))
-    screen.blit(P1.right_img_2, (500, 500))
+        screen.blit(P1.base_img, (P1.pos_x, P1.pos_y))
 
+    else:
 
+        screen.blit(P1.base_img, (P1.pos_x, P1.pos_y))
+    
     pygame.display.update()

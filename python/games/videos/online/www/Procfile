@@ -1,0 +1,1 @@
+web: gunicorn snowZeros.wsgi --log-file -
